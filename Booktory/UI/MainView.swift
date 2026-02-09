@@ -10,28 +10,24 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            Text("독서")
+            TimerMainView()
                 .tabItem {
                     Image(systemName: "clock")
-                    Text("독서")
                 }
             
             Text("내 기록")
                 .tabItem {
-                    Image(systemName: "person")
-                    Text("내 기록")
+                    Image(systemName: "book")
                 }
             
             Text("검색")
                 .tabItem {
                     Image(systemName: "magnifyingglass")
-                    Text("탐색")
                 }
             
-            Text("설정 화면")
+            Text("")
                 .tabItem {
-                    Image(systemName: "gear")
-                    Text("설정")
+                    Image(systemName: "person")
                 }
         }
     }
