@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TimerMainView: View {
+    @State private var isPresentingTimerView: Bool = false
+    
     var body: some View {
         ZStack {
             Color.paperGray
@@ -32,7 +34,7 @@ struct TimerMainView: View {
                         .multilineTextAlignment(.center)
                     
                     Button {
-                        
+                        self.isPresentingTimerView = true
                     } label: {
                      Text("Find a Book")
                             .font(.title3.bold())
@@ -57,6 +59,9 @@ struct TimerMainView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .fullScreenCover(isPresented: $isPresentingTimerView) {
+            TimerView()
+        }
     }
 }
 
