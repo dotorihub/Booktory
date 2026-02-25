@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TimerMainView: View {
+    @Binding var selectedTab: Int
     @State private var isPresentingTimerView: Bool = false
     
     var body: some View {
@@ -34,9 +35,10 @@ struct TimerMainView: View {
                         .multilineTextAlignment(.center)
                     
                     Button {
-                        self.isPresentingTimerView = true
+                        // Search 탭으로 이동
+                        selectedTab = 2
                     } label: {
-                     Text("Find a Book")
+                        Text("Find a Book")
                             .font(.title3.bold())
                             .padding()
                             .foregroundStyle(.white)
@@ -51,7 +53,7 @@ struct TimerMainView: View {
                         .fill(Color.white)
                         .shadow(
                             color: Color.black.opacity(0.1),
-                            radius: 6,
+                            radius: 6
                         )
                 )
                 .padding(.horizontal, 16)
@@ -66,5 +68,6 @@ struct TimerMainView: View {
 }
 
 #Preview {
-    TimerMainView()
+    // Preview용 더미 바인딩
+    TimerMainView(selectedTab: .constant(0))
 }
