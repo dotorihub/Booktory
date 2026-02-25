@@ -14,7 +14,7 @@
 		B89286612F4F17F400B755CF /* Exceptions for "Booktory" folder in "Booktory" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Configs/Info.plist,
 			);
 			target = B85E3CCB2F3A01230010AB0B /* Booktory */;
 		};
@@ -141,7 +141,7 @@
 		B85E3CD52F3A01240010AB0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = B85E3CCE2F3A01230010AB0B /* Booktory */;
-			baseConfigurationReferenceRelativePath = Resources/Configs/Secrets.xcconfig;
+			baseConfigurationReferenceRelativePath = Configs/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -207,7 +207,7 @@
 		B85E3CD62F3A01240010AB0B /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = B85E3CCE2F3A01230010AB0B /* Booktory */;
-			baseConfigurationReferenceRelativePath = Resources/Configs/Secrets.xcconfig;
+			baseConfigurationReferenceRelativePath = Configs/Secrets.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -273,7 +273,7 @@
 				DEVELOPMENT_TEAM = B6T64C4SDZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Booktory/Info.plist;
+				INFOPLIST_FILE = Booktory/Configs/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "북토리";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -309,7 +309,7 @@
 				DEVELOPMENT_TEAM = B6T64C4SDZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Booktory/Info.plist;
+				INFOPLIST_FILE = Booktory/Configs/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "북토리";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
