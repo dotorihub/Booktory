@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BooktoryApp: App {
@@ -13,5 +14,6 @@ struct BooktoryApp: App {
         WindowGroup {
             MainView()
         }
+        .modelContainer(for: [LibraryBook.self, ReadingSession.self])
     }
 }
