@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import Combine
 import OSLog
 
 private let logger = Logger(subsystem: "com.dotorihub.Booktory", category: "LibraryTabViewModel")
@@ -56,10 +57,10 @@ final class LibraryTabViewModel: ObservableObject {
 
         case .reading:
             return items.sorted { a, b in
-                let aTime = a.sessions.compactMap(\.startTime as Date?).max()
+                let aTime = a.sessions.map(\.startTime).max()
                     ?? a.startedAt
                     ?? a.addedAt
-                let bTime = b.sessions.compactMap(\.startTime as Date?).max()
+                let bTime = b.sessions.map(\.startTime).max()
                     ?? b.startedAt
                     ?? b.addedAt
                 return aTime > bTime
@@ -75,3 +76,4 @@ final class LibraryTabViewModel: ObservableObject {
         }
     }
 }
+

@@ -139,19 +139,19 @@ private struct LibraryTabContentView: View {
 // MARK: - Preview
 
 #Preview("그리드 - 전체") {
-    LibraryTabView(viewModel: LibraryTabViewModel(repository: .populated()))
+    LibraryTabView(viewModel: LibraryTabViewModel(repository: PreviewLibraryRepository.populated()))
         .environmentObject(AppCoordinator())
 }
 
 #Preview("리스트 - 읽고 있는") {
-    let vm = LibraryTabViewModel(repository: .populated())
+    let vm = LibraryTabViewModel(repository: PreviewLibraryRepository.populated())
     vm.layoutStyle = .list
-    Task { await vm.selectFilter(.reading) }
+    vm.selectedFilter = .reading   // 직접 설정하여 Task 사용 회피
     return LibraryTabView(viewModel: vm)
         .environmentObject(AppCoordinator())
 }
 
 #Preview("Empty State - 전체") {
-    LibraryTabView(viewModel: LibraryTabViewModel(repository: .empty()))
+    LibraryTabView(viewModel: LibraryTabViewModel(repository: PreviewLibraryRepository.empty()))
         .environmentObject(AppCoordinator())
 }
