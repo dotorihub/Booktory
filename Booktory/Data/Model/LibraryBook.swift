@@ -30,7 +30,9 @@ final class LibraryBook {
         publisher: String,
         coverURL: String,
         bookDescription: String,
-        status: ReadingStatus
+        status: ReadingStatus,
+        startedAt: Date? = nil,
+        completedAt: Date? = nil
     ) {
         self.id = UUID()
         self.isbn = isbn
@@ -41,7 +43,7 @@ final class LibraryBook {
         self.bookDescription = bookDescription
         self.status = status
         self.addedAt = Date()
-        self.startedAt = status == .reading ? Date() : nil
-        self.completedAt = nil
+        self.startedAt = startedAt ?? (status == .reading ? Date() : nil)
+        self.completedAt = completedAt ?? nil
     }
 }
