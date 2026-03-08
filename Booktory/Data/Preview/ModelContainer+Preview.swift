@@ -33,7 +33,7 @@ extension ModelContainer {
             title: "채식주의자",
             author: "한강",
             publisher: "창비",
-            coverURL: "",
+            coverURL: "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/4808936434595.jpg",
             bookDescription: "한강의 장편소설.",
             status: .reading,
             startedAt: Date.now
@@ -59,7 +59,7 @@ extension ModelContainer {
             title: "데미안",
             author: "헤르만 헤세",
             publisher: "민음사",
-            coverURL: "",
+            coverURL: "https://contents.kyobobook.co.kr/sih/fit-in/400x0/pdt/9788937460449.jpg",
             bookDescription: "헤르만 헤세의 성장 소설.",
             status: .wantToRead
         )
@@ -70,7 +70,7 @@ extension ModelContainer {
             title: "불편한 편의점",
             author: "김호연",
             publisher: "나무옆의자",
-            coverURL: "",
+            coverURL: "https://image.yes24.com/goods/99308021/XL",
             bookDescription: "편의점을 배경으로 한 따뜻한 이야기.",
             status: .completed,
             startedAt: Date(timeIntervalSinceNow: -86400 * 30),
