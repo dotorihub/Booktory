@@ -2,15 +2,16 @@
 //  TimerMainView.swift
 //  Booktory
 //
-//  Created by 김지현 on 2/9/26.
+//  04-reading-tab 구현 시 ReadingTabView로 대체 예정.
+//  현재는 임시 Empty State 화면.
 //
 
 import SwiftUI
 
 struct TimerMainView: View {
-    @Binding var selectedTab: Int
+    @EnvironmentObject private var coordinator: AppCoordinator
     @State private var isPresentingTimerView: Bool = false
-    
+
     var body: some View {
         ZStack {
             Color.paperGray
@@ -23,7 +24,7 @@ struct TimerMainView: View {
                 .padding(.top, 20)
                 .padding(.horizontal, 24)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 VStack(spacing: 24) {
                     Image(systemName: "book")
                         .resizable()
@@ -33,10 +34,9 @@ struct TimerMainView: View {
                         .font(.title2.bold())
                     Text("Track your reading, take notes, and build a lasting habit with Bookly.")
                         .multilineTextAlignment(.center)
-                    
+
                     Button {
-                        // Search 탭으로 이동
-                        selectedTab = 2
+                        coordinator.switchTab(to: .search)
                     } label: {
                         Text("Find a Book")
                             .font(.title3.bold())
@@ -51,10 +51,7 @@ struct TimerMainView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.white)
-                        .shadow(
-                            color: Color.black.opacity(0.1),
-                            radius: 6
-                        )
+                        .shadow(color: Color.black.opacity(0.1), radius: 6)
                 )
                 .padding(.horizontal, 16)
                 .padding(.top, 8)
@@ -68,6 +65,6 @@ struct TimerMainView: View {
 }
 
 #Preview {
-    // Preview용 더미 바인딩
-    TimerMainView(selectedTab: .constant(0))
+    TimerMainView()
+        .environmentObject(AppCoordinator())
 }

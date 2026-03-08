@@ -18,11 +18,11 @@
 
 | 번호 | 파일 | 설명 | 상태 |
 |---|---|---|---|
-| 01 | [phase1/01-book-detail.md](phase1/01-book-detail.md) | 책 상세 화면 | 미시작 |
-| 02 | [phase1/02-library-action.md](phase1/02-library-action.md) | 바로읽기 / 읽고싶은 저장 액션 | 미시작 |
-| 03 | [phase1/03-reading-tab.md](phase1/03-reading-tab.md) | 독서 탭 (읽고 있는 책 목록 + Empty State) | 미시작 |
-| 04 | [phase1/04-timer-session.md](phase1/04-timer-session.md) | 타이머 ↔ 세션 저장 연동 | 미시작 |
-| 05 | [phase1/05-library-tab.md](phase1/05-library-tab.md) | 서재 탭 (목록 + 필터) | 미시작 |
+| 01 | [phase1/01-library-action.md](phase1/01-library-action.md) | 바로읽기 / 읽고싶은 저장 액션 | 미시작 |
+| 02 | [phase1/02-library-tab.md](phase1/02-library-tab.md) | 서재 탭 (목록 + 필터) | 미시작 |
+| 03 | [phase1/03-book-detail.md](phase1/03-book-detail.md) | 책 상세 화면 | 미시작 |
+| 04 | [phase1/04-reading-tab.md](phase1/04-reading-tab.md) | 독서 탭 (읽고 있는 책 목록 + Empty State) | 미시작 |
+| 05 | [phase1/05-timer-session.md](phase1/05-timer-session.md) | 타이머 ↔ 세션 저장 연동 | 미시작 |
 | 06 | [phase1/06-library-detail.md](phase1/06-library-detail.md) | 서재 책 상세 + 세션 히스토리 | 미시작 |
 
 ---

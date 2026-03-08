@@ -7,12 +7,10 @@ import Foundation
 import SwiftData
 import OSLog
 
-// MARK: - DefaultLibraryRepository
+private let logger = Logger(subsystem: "com.dotorihub.Booktory", category: "LibraryRepository")
 
 final class DefaultLibraryRepository: LibraryRepositoryProtocol {
-
     private let context: ModelContext
-    private let logger = Logger(subsystem: "com.booktory", category: "LibraryRepository")
 
     init(context: ModelContext) {
         self.context = context
@@ -28,9 +26,8 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
     }
 
     func fetchBy(status: ReadingStatus) throws -> [LibraryBook] {
-        let raw = status.rawValue
         let descriptor = FetchDescriptor<LibraryBook>(
-            predicate: #Predicate { $0.statusRaw == raw },
+            predicate: #Predicate { $0.status == status },
             sortBy: [SortDescriptor(\.addedAt, order: .reverse)]
         )
         return try context.fetch(descriptor)
@@ -46,52 +43,46 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
     // MARK: - LibraryBook 쓰기
 
     func add(_ book: LibraryBook) throws {
-        if let existing = try fetchBy(isbn: book.isbn) {
-            logger.warning("중복 추가 시도 — isbn: \(book.isbn), 기존 상태: \(existing.statusRaw)")
-            throw RepositoryError.duplicateISBN
+        guard (try? fetchBy(isbn: book.isbn)) == nil else {
+            throw LibraryRepositoryError.duplicateISBN(book.isbn)
         }
         context.insert(book)
         try context.save()
-        logger.info("서재 추가 완료 — \(book.title)")
     }
 
     func updateStatus(id: UUID, to status: ReadingStatus) throws {
-        guard let book = try fetchBook(by: id) else {
-            logger.error("상태 변경 실패 — id를 찾을 수 없음: \(id)")
-            throw RepositoryError.bookNotFound
+        guard let book = try fetchBookBy(id: id) else {
+            throw LibraryRepositoryError.bookNotFound(id)
         }
         book.status = status
-        if status == .reading, book.startedAt == nil {
-            book.startedAt = .now
-        }
-        if status == .completed {
-            book.completedAt = .now
+        switch status {
+        case .reading where book.startedAt == nil:
+            book.startedAt = Date()
+        case .completed:
+            book.completedAt = Date()
+        default:
+            break
         }
         try context.save()
-        logger.info("상태 변경 완료 — \(book.title): \(status.rawValue)")
     }
 
     func delete(id: UUID) throws {
-        guard let book = try fetchBook(by: id) else {
-            logger.error("삭제 실패 — id를 찾을 수 없음: \(id)")
-            throw RepositoryError.bookNotFound
+        guard let book = try fetchBookBy(id: id) else {
+            throw LibraryRepositoryError.bookNotFound(id)
         }
         context.delete(book)
         try context.save()
-        logger.info("서재 삭제 완료 — \(book.title)")
     }
 
     // MARK: - ReadingSession
 
     func addSession(_ session: ReadingSession, to bookId: UUID) throws {
-        guard let book = try fetchBook(by: bookId) else {
-            logger.error("세션 추가 실패 — bookId를 찾을 수 없음: \(bookId)")
-            throw RepositoryError.bookNotFound
+        guard let book = try fetchBookBy(id: bookId) else {
+            throw LibraryRepositoryError.bookNotFound(bookId)
         }
-        session.libraryBook = book
+        book.sessions.append(session)
         context.insert(session)
         try context.save()
-        logger.info("세션 저장 완료 — \(book.title), 독서 시간: \(session.duration)초")
     }
 
     func fetchSessions(for bookId: UUID) throws -> [ReadingSession] {
@@ -102,12 +93,28 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
         return try context.fetch(descriptor)
     }
 
-    // MARK: - Private Helpers
+    // MARK: - Private
 
-    private func fetchBook(by id: UUID) throws -> LibraryBook? {
+    private func fetchBookBy(id: UUID) throws -> LibraryBook? {
         let descriptor = FetchDescriptor<LibraryBook>(
             predicate: #Predicate { $0.id == id }
         )
         return try context.fetch(descriptor).first
+    }
+}
+
+// MARK: - Errors
+
+enum LibraryRepositoryError: LocalizedError {
+    case duplicateISBN(String)
+    case bookNotFound(UUID)
+
+    var errorDescription: String? {
+        switch self {
+        case .duplicateISBN(let isbn):
+            return "이미 서재에 추가된 책입니다. (ISBN: \(isbn))"
+        case .bookNotFound(let id):
+            return "서재에서 해당 책을 찾을 수 없습니다. (ID: \(id))"
+        }
     }
 }

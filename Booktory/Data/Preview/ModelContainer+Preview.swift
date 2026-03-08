@@ -3,6 +3,7 @@
 //  Booktory
 //
 
+import Foundation
 import SwiftData
 
 // MARK: - Preview용 in-memory 컨테이너
@@ -35,7 +36,7 @@ extension ModelContainer {
             coverURL: "",
             bookDescription: "한강의 장편소설.",
             status: .reading,
-            startedAt: .now
+            startedAt: Date.now
         )
         let session1 = ReadingSession(
             libraryBookId: book1.id,
