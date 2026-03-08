@@ -26,11 +26,8 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
     }
 
     func fetchBy(status: ReadingStatus) throws -> [LibraryBook] {
-        let descriptor = FetchDescriptor<LibraryBook>(
-            predicate: #Predicate { $0.status == status },
-            sortBy: [SortDescriptor(\.addedAt, order: .reverse)]
-        )
-        return try context.fetch(descriptor)
+        // iOS 17 SwiftData #Predicate에서 enum 직접 비교가 불안정하므로 메모리 필터링으로 처리
+        return try fetchAll().filter { $0.status == status }
     }
 
     func fetchBy(isbn: String) throws -> LibraryBook? {

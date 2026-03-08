@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 // MARK: - Public Entry Point
 
@@ -44,9 +45,8 @@ private struct LibraryTabContentView: View {
                         Task { await viewModel.selectFilter(filter) }
                     }
                 ))
-                .padding(.vertical, 8)
-
-                Divider()
+                .padding(.top, 8)
+                .background(alignment: .bottom) { Divider() }
 
                 if viewModel.books.isEmpty && !viewModel.isLoading {
                     LibraryEmptyView(filter: viewModel.selectedFilter) {
@@ -57,7 +57,7 @@ private struct LibraryTabContentView: View {
                 }
             }
             .navigationTitle("서재")
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .alert("오류", isPresented: Binding(
                 get: { viewModel.errorMessage != nil },
@@ -139,16 +139,22 @@ private struct LibraryTabContentView: View {
 // MARK: - Preview
 
 #Preview("그리드 - 전체") {
-    LibraryTabView(viewModel: LibraryTabViewModel(repository: PreviewLibraryRepository.populated()))
+    let container = ModelContainer.previewWithSampleData
+    let repo = DefaultLibraryRepository(context: container.mainContext)
+    return LibraryTabView(viewModel: LibraryTabViewModel(repository: repo))
         .environmentObject(AppCoordinator())
+        .modelContainer(container)
 }
 
 #Preview("리스트 - 읽고 있는") {
-    let vm = LibraryTabViewModel(repository: PreviewLibraryRepository.populated())
+    let container = ModelContainer.previewWithSampleData
+    let repo = DefaultLibraryRepository(context: container.mainContext)
+    let vm = LibraryTabViewModel(repository: repo)
     vm.layoutStyle = .list
-    vm.selectedFilter = .reading   // 직접 설정하여 Task 사용 회피
+    vm.selectedFilter = .reading
     return LibraryTabView(viewModel: vm)
         .environmentObject(AppCoordinator())
+        .modelContainer(container)
 }
 
 #Preview("Empty State - 전체") {
