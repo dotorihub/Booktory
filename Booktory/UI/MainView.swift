@@ -2,43 +2,53 @@
 //  MainView.swift
 //  Booktory
 //
-//  Created by 김지현 on 2/9/26.
-//
 
 import SwiftUI
 
 struct MainView: View {
-    @State private var selectedTab: Int = 0
+    @EnvironmentObject private var coordinator: AppCoordinator
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            TimerMainView(selectedTab: $selectedTab)
+        TabView(selection: Binding(
+            get: { coordinator.selectedTab },
+            set: { coordinator.selectedTab = $0 }
+        )) {
+            ReadingTabView()
                 .tabItem {
-                    Image(systemName: "clock")
+                    Label(AppCoordinator.Tab.reading.title,
+                          systemImage: AppCoordinator.Tab.reading.icon)
                 }
-                .tag(0)
-
-            Text("내 기록")
-                .tabItem {
-                    Image(systemName: "book")
-                }
-                .tag(1)
+                .tag(AppCoordinator.Tab.reading)
+                .accessibilityLabel(AppCoordinator.Tab.reading.title)
 
             SearchView()
                 .tabItem {
-                    Image(systemName: "magnifyingglass")
+                    Label(AppCoordinator.Tab.search.title,
+                          systemImage: AppCoordinator.Tab.search.icon)
                 }
-                .tag(2)
+                .tag(AppCoordinator.Tab.search)
+                .accessibilityLabel(AppCoordinator.Tab.search.title)
 
-            Text("")
+            RecordTabView()
                 .tabItem {
-                    Image(systemName: "person")
+                    Label(AppCoordinator.Tab.record.title,
+                          systemImage: AppCoordinator.Tab.record.icon)
                 }
-                .tag(3)
+                .tag(AppCoordinator.Tab.record)
+                .accessibilityLabel(AppCoordinator.Tab.record.title)
+
+            LibraryTabView()
+                .tabItem {
+                    Label(AppCoordinator.Tab.library.title,
+                          systemImage: AppCoordinator.Tab.library.icon)
+                }
+                .tag(AppCoordinator.Tab.library)
+                .accessibilityLabel(AppCoordinator.Tab.library.title)
         }
     }
 }
 
 #Preview {
     MainView()
+        .environmentObject(AppCoordinator())
 }
