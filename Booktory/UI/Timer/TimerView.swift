@@ -28,6 +28,20 @@ struct TimerView: View {
 
     var body: some View {
         VStack(spacing: 40) {
+            HStack {
+                Spacer()
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.primary)
+                        .frame(width: 36, height: 36)
+                        .background(Color.gray.opacity(0.15))
+                        .clipShape(Circle())
+                }
+                .accessibilityLabel("나가기")
+            }
+            .padding(.horizontal, 20)
+
             VStack(spacing: 12) {
                 AsyncImage(url: URL(string: book.coverURL)) { phase in
                     switch phase {
@@ -64,20 +78,7 @@ struct TimerView: View {
                 Text(formatTime(elapsed))
                     .font(.system(size: 44, weight: .bold, design: .monospaced))
 
-                HStack(spacing: 32) {
-                    // 나가기 버튼
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 20))
-                            .foregroundColor(.primary)
-                            .frame(width: 50, height: 50)
-                            .background(Color.gray.opacity(0.2))
-                            .clipShape(Circle())
-                    }
-                    .accessibilityLabel("나가기")
-
-                    // 재생/일시정지 버튼
-                    if startDate != nil {
+                if startDate != nil {
                         Button(action: pause) {
                             Image(systemName: "pause.fill")
                                 .font(.system(size: 28))
@@ -97,11 +98,11 @@ struct TimerView: View {
                                 .clipShape(Circle())
                         }
                         .accessibilityLabel("재개")
-                    }
                 }
             }
         }
-        .padding(.vertical, 80)
+        .padding(.top, 16)
+        .padding(.bottom, 80)
         .onAppear {
             start()
         }

@@ -50,6 +50,7 @@ struct ReadingBookCard: View {
 
                 Button(action: onResume) {
                     Text("이어 읽기")
+                        .fontWeight(.bold)
                 }
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -58,7 +59,8 @@ struct ReadingBookCard: View {
         .padding(16)
         .background(.background)
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .shadow(radius: 2)
+        .shadow(color: .black.opacity(0.04), radius: 1, x: -1, y: -1)
+        .shadow(color: .black.opacity(0.06), radius: 4, x: 2, y: 4)
     }
 
     // MARK: - Helpers
@@ -72,14 +74,17 @@ struct ReadingBookCard: View {
     }
 
     private func formatReadingTime(_ seconds: TimeInterval) -> String {
-        let totalMinutes = Int(seconds) / 60
-        let hours = totalMinutes / 60
-        let minutes = totalMinutes % 60
+        let totalSeconds = Int(seconds)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let secs = totalSeconds % 60
 
         if hours > 0 {
-            return "총 \(hours)시간 \(String(format: "%02d", minutes))분"
+            return "총 \(hours)시간 \(String(format: "%02d", minutes))분 \(String(format: "%02d", secs))초"
+        } else if minutes > 0 {
+            return "총 \(String(format: "%02d", minutes))분 \(String(format: "%02d", secs))초"
         } else {
-            return "총 \(String(format: "%02d", minutes))분"
+            return "총 \(String(format: "%02d", secs))초"
         }
     }
 }
