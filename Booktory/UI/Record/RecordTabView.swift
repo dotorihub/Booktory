@@ -12,6 +12,7 @@ struct RecordTabView: View {
         NavigationStack {
             Text("기록 탭")
                 .navigationTitle("기록")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
