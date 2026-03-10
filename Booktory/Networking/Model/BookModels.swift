@@ -70,3 +70,19 @@ struct Book: Identifiable, Hashable {
     }
 }
 
+// MARK: - Preview
+
+extension Book {
+    static let preview = Book(from: NaverBookItem(
+        title: "클린 코드",
+        link: "https://book.naver.com/bookdb/book_detail.nhn?bid=7390287",
+        image: "",
+        author: "로버트 C. 마틴",
+        discount: nil,
+        publisher: "인사이트",
+        pubdate: "20131217",
+        isbn: "9791162540145",
+        description: "애자일 소프트웨어 장인 정신을 담은 책. 좋은 코드를 작성하는 방법과 나쁜 코드를 좋은 코드로 바꾸는 방법을 상세히 설명한다. 단순히 작동하는 코드를 넘어서 읽기 쉽고 유지보수하기 좋은 코드를 만드는 원칙과 패턴을 다룬다. 프로 개발자라면 반드시 읽어야 할 필독서."
+    ))
+}
+

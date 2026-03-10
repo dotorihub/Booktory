@@ -39,7 +39,15 @@ final class AppCoordinator: ObservableObject {
 
     @Published var selectedTab: Tab = .reading
 
+    /// 독서 탭에서 자동 타이머 오픈 트리거. 소비 후 반드시 nil로 초기화.
+    @Published var pendingAutoOpenBookId: UUID?
+
     func switchTab(to tab: Tab) {
         selectedTab = tab
+    }
+
+    func openTimer(for bookId: UUID) {
+        pendingAutoOpenBookId = bookId
+        switchTab(to: .reading)
     }
 }

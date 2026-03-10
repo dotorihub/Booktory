@@ -12,6 +12,7 @@ struct ReadingTabView: View {
         NavigationStack {
             Text("독서 탭")
                 .navigationTitle("독서")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
