@@ -136,6 +136,7 @@ Booktory/
 - View에 비즈니스 로직 작성 금지. 조건 분기가 필요하면 ViewModel로 이동
 - ViewModel은 View를 import하지 않음
 - ViewModel 프로퍼티는 최소한만 `@Published`로 노출
+- `@Published` 등 Combine 요소가 사용된 파일에는 `import Combine` 빼먹지 말 것 
 - 복잡한 ViewModel은 UseCase / Repository로 책임 분리
 
 ### 데이터 레이어
@@ -164,6 +165,7 @@ Booktory/
 - 재사용 가능한 UI 컴포넌트는 `UI/Components/`에 분리
 - SwiftUI Preview는 모든 View에 작성
 - 주석은 "무엇"이 아닌 "왜"를 설명. 자명한 코드에 주석 금지
+- 주석이 있는 코드에 수정을 하게 될 경우, 기존 주석을 모두 삭제하기 보단 업데이트 시킬 것. (최대한 주석을 남겨둬서 히스토리 기록할 것)
 
 ### 접근성 / 한국어
 
