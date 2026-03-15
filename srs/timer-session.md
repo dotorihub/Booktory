@@ -141,7 +141,7 @@ extension TimerViewModel {
 
     /// 확인 Alert에서 [계속 읽기] 선택 시 호출
     func cancelExit() {
-        // 일시정지 상태 유지 — 사용자가 수동으로 재개
+        resume()
     }
 }
 ```
