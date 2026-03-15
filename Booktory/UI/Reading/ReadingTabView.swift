@@ -33,6 +33,7 @@ struct ReadingTabView: View {
 private struct ReadingTabContentView: View {
     @StateObject var viewModel: ReadingTabViewModel
     @EnvironmentObject private var coordinator: AppCoordinator
+    @Environment(\.libraryRepository) private var repository
 
     var body: some View {
         NavigationStack {
@@ -71,7 +72,7 @@ private struct ReadingTabContentView: View {
             .fullScreenCover(item: $viewModel.selectedBook, onDismiss: {
                 Task { await viewModel.loadBooks() }
             }) { book in
-                TimerView(book: book)
+                TimerView(book: book, repository: repository)
             }
             .onChange(of: coordinator.pendingAutoOpenBookId) { _, bookId in
                 guard let bookId else { return }
