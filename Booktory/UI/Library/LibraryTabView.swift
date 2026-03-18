@@ -58,6 +58,9 @@ private struct LibraryTabContentView: View {
             }
             .navigationTitle("서재")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: LibraryBook.self) { book in
+                LibraryDetailView(book: book)
+            }
             .toolbar { toolbarContent }
             .alert("오류", isPresented: Binding(
                 get: { viewModel.errorMessage != nil },
@@ -69,6 +72,7 @@ private struct LibraryTabContentView: View {
             }
         }
         .task { await viewModel.loadBooks() }
+        .onAppear { Task { await viewModel.loadBooks() } }
     }
 
     // MARK: - 콘텐츠 (그리드 / 리스트)
