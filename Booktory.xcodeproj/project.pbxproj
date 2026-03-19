@@ -6,11 +6,51 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B878262A2F6BAE0500CF3B7F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B87826292F6BAE0500CF3B7F /* WidgetKit.framework */; };
+		B878262C2F6BAE0500CF3B7F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B878262B2F6BAE0500CF3B7F /* SwiftUI.framework */; };
+		B878263D2F6BAE0800CF3B7F /* BooktoryLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B87826272F6BAE0500CF3B7F /* BooktoryLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B878263B2F6BAE0800CF3B7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B85E3CC42F3A01230010AB0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B87826262F6BAE0500CF3B7F;
+			remoteInfo = BooktoryLiveActivityExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B87826422F6BAE0800CF3B7F /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B878263D2F6BAE0800CF3B7F /* BooktoryLiveActivityExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B85E3CCC2F3A01230010AB0B /* Booktory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Booktory.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B87826272F6BAE0500CF3B7F /* BooktoryLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BooktoryLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B87826292F6BAE0500CF3B7F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B878262B2F6BAE0500CF3B7F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B87826412F6BAE0800CF3B7F /* Exceptions for "BooktoryLiveActivity" folder in "BooktoryLiveActivityExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B87826262F6BAE0500CF3B7F /* BooktoryLiveActivityExtension */;
+		};
 		B89286612F4F17F400B755CF /* Exceptions for "Booktory" folder in "Booktory" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -29,6 +69,14 @@
 			path = Booktory;
 			sourceTree = "<group>";
 		};
+		B878262D2F6BAE0500CF3B7F /* BooktoryLiveActivity */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B87826412F6BAE0800CF3B7F /* Exceptions for "BooktoryLiveActivity" folder in "BooktoryLiveActivityExtension" target */,
+			);
+			path = BooktoryLiveActivity;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +87,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B87826242F6BAE0500CF3B7F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B878262C2F6BAE0500CF3B7F /* SwiftUI.framework in Frameworks */,
+				B878262A2F6BAE0500CF3B7F /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -46,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				B85E3CCE2F3A01230010AB0B /* Booktory */,
+				B878262D2F6BAE0500CF3B7F /* BooktoryLiveActivity */,
+				B87826282F6BAE0500CF3B7F /* Frameworks */,
 				B85E3CCD2F3A01230010AB0B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,8 +113,18 @@
 			isa = PBXGroup;
 			children = (
 				B85E3CCC2F3A01230010AB0B /* Booktory.app */,
+				B87826272F6BAE0500CF3B7F /* BooktoryLiveActivityExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B87826282F6BAE0500CF3B7F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B87826292F6BAE0500CF3B7F /* WidgetKit.framework */,
+				B878262B2F6BAE0500CF3B7F /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -68,10 +137,12 @@
 				B85E3CC82F3A01230010AB0B /* Sources */,
 				B85E3CC92F3A01230010AB0B /* Frameworks */,
 				B85E3CCA2F3A01230010AB0B /* Resources */,
+				B87826422F6BAE0800CF3B7F /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B878263C2F6BAE0800CF3B7F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B85E3CCE2F3A01230010AB0B /* Booktory */,
@@ -82,6 +153,28 @@
 			productName = Booktory;
 			productReference = B85E3CCC2F3A01230010AB0B /* Booktory.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B87826262F6BAE0500CF3B7F /* BooktoryLiveActivityExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B878263E2F6BAE0800CF3B7F /* Build configuration list for PBXNativeTarget "BooktoryLiveActivityExtension" */;
+			buildPhases = (
+				B87826232F6BAE0500CF3B7F /* Sources */,
+				B87826242F6BAE0500CF3B7F /* Frameworks */,
+				B87826252F6BAE0500CF3B7F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B878262D2F6BAE0500CF3B7F /* BooktoryLiveActivity */,
+			);
+			name = BooktoryLiveActivityExtension;
+			packageProductDependencies = (
+			);
+			productName = BooktoryLiveActivityExtension;
+			productReference = B87826272F6BAE0500CF3B7F /* BooktoryLiveActivityExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -94,6 +187,9 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					B85E3CCB2F3A01230010AB0B = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					B87826262F6BAE0500CF3B7F = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
@@ -113,12 +209,20 @@
 			projectRoot = "";
 			targets = (
 				B85E3CCB2F3A01230010AB0B /* Booktory */,
+				B87826262F6BAE0500CF3B7F /* BooktoryLiveActivityExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B85E3CCA2F3A01230010AB0B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B87826252F6BAE0500CF3B7F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +239,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B87826232F6BAE0500CF3B7F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B878263C2F6BAE0800CF3B7F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B87826262F6BAE0500CF3B7F /* BooktoryLiveActivityExtension */;
+			targetProxy = B878263B2F6BAE0800CF3B7F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B85E3CD52F3A01240010AB0B /* Debug */ = {
@@ -335,6 +454,66 @@
 			};
 			name = Release;
 		};
+		B878263F2F6BAE0800CF3B7F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B6T64C4SDZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BooktoryLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BooktoryLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotorihub.Booktory.BooktoryLiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B87826402F6BAE0800CF3B7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B6T64C4SDZ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BooktoryLiveActivity/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BooktoryLiveActivity;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dotorihub.Booktory.BooktoryLiveActivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -352,6 +531,15 @@
 			buildConfigurations = (
 				B85E3CD82F3A01240010AB0B /* Debug */,
 				B85E3CD92F3A01240010AB0B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B878263E2F6BAE0800CF3B7F /* Build configuration list for PBXNativeTarget "BooktoryLiveActivityExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B878263F2F6BAE0800CF3B7F /* Debug */,
+				B87826402F6BAE0800CF3B7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
