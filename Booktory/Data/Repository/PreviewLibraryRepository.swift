@@ -53,13 +53,18 @@ final class PreviewLibraryRepository: LibraryRepositoryProtocol {
     // MARK: - ReadingSession
 
     func addSession(_ session: ReadingSession, to bookId: UUID) throws {
-        guard books.contains(where: { $0.id == bookId }) else {
+        guard let book = books.first(where: { $0.id == bookId }) else {
             throw LibraryRepositoryError.bookNotFound(bookId)
         }
+        session.libraryBook = book
         sessions.append(session)
     }
 
     func fetchSessions(for bookId: UUID) throws -> [ReadingSession] {
         sessions.filter { $0.libraryBookId == bookId }.sorted { $0.startTime > $1.startTime }
+    }
+
+    func fetchAllSessions() throws -> [ReadingSession] {
+        sessions.sorted { $0.startTime > $1.startTime }
     }
 }

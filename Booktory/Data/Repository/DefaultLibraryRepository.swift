@@ -90,6 +90,13 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
         return try context.fetch(descriptor)
     }
 
+    func fetchAllSessions() throws -> [ReadingSession] {
+        let descriptor = FetchDescriptor<ReadingSession>(
+            sortBy: [SortDescriptor(\.startTime, order: .reverse)]
+        )
+        return try context.fetch(descriptor)
+    }
+
     // MARK: - Private
 
     private func fetchBookBy(id: UUID) throws -> LibraryBook? {

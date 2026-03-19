@@ -24,4 +24,5 @@ protocol LibraryRepositoryProtocol {
 
     func addSession(_ session: ReadingSession, to bookId: UUID) throws
     func fetchSessions(for bookId: UUID) throws -> [ReadingSession]
+    func fetchAllSessions() throws -> [ReadingSession]
 }
