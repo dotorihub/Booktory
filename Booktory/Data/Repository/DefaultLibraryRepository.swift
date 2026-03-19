@@ -100,6 +100,32 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
         return try context.fetch(descriptor)
     }
 
+    // MARK: - Quote
+
+    func addQuote(_ quote: Quote, to bookId: UUID) throws {
+        guard let book = try fetchBookBy(id: bookId) else {
+            throw LibraryRepositoryError.bookNotFound(bookId)
+        }
+        book.quotes.append(quote)
+        context.insert(quote)
+        try context.save()
+    }
+
+    func fetchQuotes(for bookId: UUID) throws -> [Quote] {
+        let descriptor = FetchDescriptor<Quote>(
+            predicate: #Predicate { $0.libraryBookId == bookId },
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        return try context.fetch(descriptor)
+    }
+
+    func fetchAllQuotes() throws -> [Quote] {
+        let descriptor = FetchDescriptor<Quote>(
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
+        return try context.fetch(descriptor)
+    }
+
     // MARK: - Private
 
     private func fetchBookBy(id: UUID) throws -> LibraryBook? {

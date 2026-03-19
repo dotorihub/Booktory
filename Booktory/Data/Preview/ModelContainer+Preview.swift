@@ -15,7 +15,7 @@ extension ModelContainer {
     @MainActor
     static var preview: ModelContainer {
         let container = try! ModelContainer(
-            for: LibraryBook.self, ReadingSession.self,
+            for: LibraryBook.self, ReadingSession.self, Quote.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         return container
@@ -77,11 +77,20 @@ extension ModelContainer {
             completedAt: Date(timeIntervalSinceNow: -86400 * 5)
         )
 
+        // 샘플 Quote
+        let quote1 = Quote(
+            libraryBookId: book1.id,
+            contentType: .text,
+            textContent: "아무도 먹지 않는 밥상 위에 시든 미나리가 놓여 있었다."
+        )
+        quote1.libraryBook = book1
+
         context.insert(book1)
         context.insert(book2)
         context.insert(book3)
         context.insert(session1)
         context.insert(session2)
+        context.insert(quote1)
 
         return container
     }

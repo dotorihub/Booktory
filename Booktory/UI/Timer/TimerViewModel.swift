@@ -118,6 +118,24 @@ final class TimerViewModel: ObservableObject {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 
+    // MARK: - 문장/이미지 기록
+
+    /// 텍스트 또는 이미지 Quote 저장
+    func saveQuote(contentType: QuoteContentType, text: String? = nil, imageData: Data? = nil) {
+        let quote = Quote(
+            libraryBookId: book.id,
+            contentType: contentType,
+            textContent: text,
+            imageData: imageData
+        )
+        do {
+            try repository.addQuote(quote, to: book.id)
+            logger.info("Quote 저장 완료: \(contentType.rawValue)")
+        } catch {
+            logger.error("Quote 저장 실패: \(error.localizedDescription)")
+        }
+    }
+
     // MARK: - 세션 저장
 
     private func saveSessionIfNeeded() {

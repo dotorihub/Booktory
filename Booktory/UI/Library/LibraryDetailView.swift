@@ -45,6 +45,7 @@ private struct LibraryDetailContentView: View {
                         Divider().padding(.horizontal)
                         descriptionSection
                         sessionHistory
+                        quoteHistory
                     }
                     .padding(.vertical, 20)
                 }
@@ -179,6 +180,28 @@ private struct LibraryDetailContentView: View {
             } else {
                 ForEach(viewModel.sessions, id: \.id) { session in
                     SessionRow(session: session)
+                }
+            }
+        }
+    }
+
+    // MARK: - 문장 기록
+
+    private var quoteHistory: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("문장 기록")
+                .font(.headline)
+                .padding(.horizontal)
+
+            if viewModel.quotes.isEmpty {
+                Text("아직 문장 기록이 없어요")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 24)
+            } else {
+                ForEach(viewModel.quotes, id: \.id) { quote in
+                    QuoteRowView(quote: quote)
                 }
             }
         }

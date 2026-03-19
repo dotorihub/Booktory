@@ -110,6 +110,22 @@ extension PreviewLibraryRepository {
             }
         }
 
+        // 읽고 있는 책(클린 코드)에 샘플 Quote 추가
+        if let readingBook = books.first(where: { $0.status == .reading }) {
+            let textQuote = Quote(
+                libraryBookId: readingBook.id,
+                contentType: .text,
+                textContent: "깨끗한 코드는 잘 쓴 문장처럼 읽혀야 한다."
+            )
+            let textQuote2 = Quote(
+                libraryBookId: readingBook.id,
+                contentType: .text,
+                textContent: "나쁜 코드는 나쁜 코드를 유혹한다. 깨진 창문 이론과 같다."
+            )
+            try? repo.addQuote(textQuote, to: readingBook.id)
+            try? repo.addQuote(textQuote2, to: readingBook.id)
+        }
+
         // 읽고 있는 책(함께 자라기)에 이번 주 + 지난 주 세션 추가 (도트 확인용)
         if let secondBook = books.first(where: { $0.title == "함께 자라기" }) {
             for dayOffset in [-1, -2, -7, -9, -14, -20] {

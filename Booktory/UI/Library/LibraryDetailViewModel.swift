@@ -17,6 +17,7 @@ final class LibraryDetailViewModel: ObservableObject {
 
     @Published private(set) var book: LibraryBook
     @Published private(set) var sessions: [ReadingSession] = []
+    @Published private(set) var quotes: [Quote] = []
     @Published private(set) var isLoading: Bool = false
     @Published var errorMessage: String?
 
@@ -39,12 +40,13 @@ final class LibraryDetailViewModel: ObservableObject {
 
     // MARK: - 공개 인터페이스
 
-    /// 화면 진입 시 세션 목록 로드
+    /// 화면 진입 시 세션 및 Quote 목록 로드
     func loadSessions() async {
         isLoading = true
         defer { isLoading = false }
         do {
             sessions = try repository.fetchSessions(for: book.id)
+            quotes = try repository.fetchQuotes(for: book.id)
         } catch {
             logger.error("세션 로드 실패: \(error.localizedDescription)")
             errorMessage = "독서 기록을 불러오지 못했습니다."

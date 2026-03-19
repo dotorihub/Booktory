@@ -33,6 +33,7 @@ final class RecordTabViewModel: ObservableObject {
     // MARK: - 데이터
 
     @Published private(set) var allSessions: [ReadingSession] = []
+    @Published private(set) var recentQuotes: [Quote] = []
 
     private let repository: any LibraryRepositoryProtocol
     private let calendar = Calendar.current
@@ -48,6 +49,7 @@ final class RecordTabViewModel: ObservableObject {
     func loadData() async {
         do {
             allSessions = try repository.fetchAllSessions()
+            recentQuotes = try repository.fetchAllQuotes()
             let books = try repository.fetchBy(status: .completed)
             completedCount = books.count
             computeStats()
