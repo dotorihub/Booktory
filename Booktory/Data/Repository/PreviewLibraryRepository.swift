@@ -11,6 +11,7 @@ import Foundation
 final class PreviewLibraryRepository: LibraryRepositoryProtocol {
     private var books: [LibraryBook] = []
     private var sessions: [ReadingSession] = []
+    private var quotes: [Quote] = []
 
     // MARK: - LibraryBook 조회
 
@@ -50,6 +51,7 @@ final class PreviewLibraryRepository: LibraryRepositoryProtocol {
         }
         books.removeAll { $0.id == id }
         sessions.removeAll { $0.libraryBookId == id }
+        quotes.removeAll { $0.libraryBookId == id }
     }
 
     // MARK: - ReadingSession
@@ -68,5 +70,23 @@ final class PreviewLibraryRepository: LibraryRepositoryProtocol {
 
     func fetchAllSessions() throws -> [ReadingSession] {
         sessions.sorted { $0.startTime > $1.startTime }
+    }
+
+    // MARK: - Quote
+
+    func addQuote(_ quote: Quote, to bookId: UUID) throws {
+        guard let book = books.first(where: { $0.id == bookId }) else {
+            throw LibraryRepositoryError.bookNotFound(bookId)
+        }
+        quote.libraryBook = book
+        quotes.append(quote)
+    }
+
+    func fetchQuotes(for bookId: UUID) throws -> [Quote] {
+        quotes.filter { $0.libraryBookId == bookId }.sorted { $0.createdAt > $1.createdAt }
+    }
+
+    func fetchAllQuotes() throws -> [Quote] {
+        quotes.sorted { $0.createdAt > $1.createdAt }
     }
 }

@@ -15,7 +15,7 @@ struct BooktoryApp: App {
             RootView()
                 .environmentObject(coordinator)
         }
-        .modelContainer(for: [LibraryBook.self, ReadingSession.self])
+        .modelContainer(for: [LibraryBook.self, ReadingSession.self, Quote.self])
     }
 }
 

@@ -9,6 +9,7 @@
 
 import Foundation
 import Combine
+import ActivityKit
 import os
 
 @MainActor
@@ -42,6 +43,7 @@ final class TimerViewModel: ObservableObject {
     private var elapsedBeforePause: TimeInterval = 0
 
     private let repository: any LibraryRepositoryProtocol
+    private let liveActivityManager = LiveActivityManager.shared
     private let logger = Logger(subsystem: "com.booktory", category: "Timer")
 
     /// 최소 세션 저장 기준 (초)
@@ -56,9 +58,11 @@ final class TimerViewModel: ObservableObject {
 
     /// 타이머 시작 (onAppear에서 자동 호출)
     func start() {
-        sessionStartTime = Date()
-        currentRunStartDate = Date()
+        let now = Date()
+        sessionStartTime = now
+        currentRunStartDate = now
         timerState = .running
+        liveActivityManager.start(bookTitle: book.title, startTime: now)
     }
 
     /// 일시정지
@@ -67,12 +71,15 @@ final class TimerViewModel: ObservableObject {
         elapsedBeforePause += Date().timeIntervalSince(runStart)
         currentRunStartDate = nil
         timerState = .paused
+        liveActivityManager.pause(elapsed: elapsedBeforePause)
     }
 
     /// 재개
     func resume() {
-        currentRunStartDate = Date()
+        let now = Date()
+        currentRunStartDate = now
         timerState = .running
+        liveActivityManager.resume(newStartTime: now, elapsedBeforePause: elapsedBeforePause)
     }
 
     /// Timer.publish 매 틱마다 호출
@@ -99,6 +106,7 @@ final class TimerViewModel: ObservableObject {
 
     /// 확인 Alert에서 [종료하기] 선택 시 호출
     func confirmExit() {
+        liveActivityManager.stop()
         saveSessionIfNeeded()
     }
 
@@ -116,6 +124,24 @@ final class TimerViewModel: ObservableObject {
         let minutes = (total % 3600) / 60
         let seconds = total % 60
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    // MARK: - 문장/이미지 기록
+
+    /// 텍스트 또는 이미지 Quote 저장
+    func saveQuote(contentType: QuoteContentType, text: String? = nil, imageData: Data? = nil) {
+        let quote = Quote(
+            libraryBookId: book.id,
+            contentType: contentType,
+            textContent: text,
+            imageData: imageData
+        )
+        do {
+            try repository.addQuote(quote, to: book.id)
+            logger.info("Quote 저장 완료: \(contentType.rawValue)")
+        } catch {
+            logger.error("Quote 저장 실패: \(error.localizedDescription)")
+        }
     }
 
     // MARK: - 세션 저장

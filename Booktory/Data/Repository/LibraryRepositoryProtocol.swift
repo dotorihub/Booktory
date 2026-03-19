@@ -25,4 +25,10 @@ protocol LibraryRepositoryProtocol {
     func addSession(_ session: ReadingSession, to bookId: UUID) throws
     func fetchSessions(for bookId: UUID) throws -> [ReadingSession]
     func fetchAllSessions() throws -> [ReadingSession]
+
+    // MARK: - Quote
+
+    func addQuote(_ quote: Quote, to bookId: UUID) throws
+    func fetchQuotes(for bookId: UUID) throws -> [Quote]
+    func fetchAllQuotes() throws -> [Quote]
 }

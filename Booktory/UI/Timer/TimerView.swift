@@ -16,6 +16,11 @@ struct TimerView: View {
     @StateObject private var viewModel: TimerViewModel
     @Environment(\.dismiss) private var dismiss
 
+    /// 문장 기록 시트 표시
+    @State private var showTextInput: Bool = false
+    /// 이미지 기록 시트 표시
+    @State private var showImagePicker: Bool = false
+
     // 매초마다 UI 업데이트용 Timer
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -34,6 +39,8 @@ struct TimerView: View {
 
             Spacer()
 
+            quoteButtons
+
             timerSection
         }
         .padding(.top, 16)
@@ -43,6 +50,16 @@ struct TimerView: View {
         }
         .onReceive(timer) { _ in
             viewModel.tick()
+        }
+        .sheet(isPresented: $showTextInput) {
+            QuoteTextInputView { text in
+                viewModel.saveQuote(contentType: .text, text: text)
+            }
+        }
+        .sheet(isPresented: $showImagePicker) {
+            QuoteImagePickerView { imageData in
+                viewModel.saveQuote(contentType: .image, imageData: imageData)
+            }
         }
         .alert("독서를 종료할까요?", isPresented: $viewModel.showExitConfirm) {
             Button("계속 읽기", role: .cancel) {
@@ -128,6 +145,41 @@ struct TimerView: View {
             .frame(width: 120, height: 180)
             .background(Color.gray.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    // MARK: - 문장/이미지 기록 버튼
+
+    private var quoteButtons: some View {
+        HStack(spacing: 24) {
+            Button {
+                showTextInput = true
+            } label: {
+                VStack(spacing: 4) {
+                    Image(systemName: "text.quote")
+                        .font(.system(size: 20))
+                    Text("문장 기록")
+                        .font(.caption2)
+                }
+                .foregroundStyle(.primary)
+                .frame(width: 60, height: 52)
+            }
+            .accessibilityLabel("문장 기록")
+
+            Button {
+                showImagePicker = true
+            } label: {
+                VStack(spacing: 4) {
+                    Image(systemName: "camera")
+                        .font(.system(size: 20))
+                    Text("사진 기록")
+                        .font(.caption2)
+                }
+                .foregroundStyle(.primary)
+                .frame(width: 60, height: 52)
+            }
+            .accessibilityLabel("사진 기록")
+        }
+        .padding(.bottom, 8)
     }
 
     // MARK: - 타이머 + 제어 버튼

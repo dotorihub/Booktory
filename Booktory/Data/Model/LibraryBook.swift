@@ -25,6 +25,9 @@ final class LibraryBook {
     @Relationship(deleteRule: .cascade)
     var sessions: [ReadingSession] = []
 
+    @Relationship(deleteRule: .cascade)
+    var quotes: [Quote] = []
+
     init(
         isbn: String,
         title: String,

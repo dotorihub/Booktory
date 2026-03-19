@@ -58,6 +58,9 @@ private struct RecordTabContentView: View {
                         date: viewModel.selectedDate,
                         summaries: viewModel.bookSummaries(for: viewModel.selectedDate)
                     )
+
+                    // 최근 문장 기록
+                    QuoteListSection(quotes: viewModel.recentQuotes)
                 }
                 .padding(.vertical)
             }
