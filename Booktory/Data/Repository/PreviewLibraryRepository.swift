@@ -32,6 +32,8 @@ final class PreviewLibraryRepository: LibraryRepositoryProtocol {
         guard !books.contains(where: { $0.isbn == book.isbn }) else {
             throw LibraryRepositoryError.duplicateISBN(book.isbn)
         }
+        // 순환 컬러 배정: 기존 책 수 기반으로 다음 colorIndex 부여
+        book.colorIndex = books.count % BookColor.allCases.count
         books.append(book)
     }
 

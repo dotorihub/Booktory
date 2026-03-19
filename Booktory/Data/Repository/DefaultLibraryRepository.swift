@@ -43,6 +43,9 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
         guard (try? fetchBy(isbn: book.isbn)) == nil else {
             throw LibraryRepositoryError.duplicateISBN(book.isbn)
         }
+        // 순환 컬러 배정: 기존 책 수 기반으로 다음 colorIndex 부여
+        let allBooks = try fetchAll()
+        book.colorIndex = allBooks.count % BookColor.allCases.count
         context.insert(book)
         try context.save()
     }

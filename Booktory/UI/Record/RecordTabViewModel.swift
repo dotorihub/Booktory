@@ -137,6 +137,49 @@ final class RecordTabViewModel: ObservableObject {
         return formatter.string(from: displayedMonth)
     }
 
+    // MARK: - 책 컬러 도트 / 표지 카드
+
+    /// 특정 날짜에 읽은 책들의 BookColor 배열 (중복 제거, colorIndex 오름차순)
+    func bookColors(for date: Date) -> [BookColor] {
+        let daySessions = sessions(for: date)
+        // libraryBook 관계를 통해 책별로 중복 제거
+        var seen = Set<UUID>()
+        var colors: [(Int, BookColor)] = []
+        for session in daySessions {
+            guard let book = session.libraryBook, !seen.contains(book.id) else { continue }
+            seen.insert(book.id)
+            colors.append((book.colorIndex, book.bookColor))
+        }
+        return colors.sorted { $0.0 < $1.0 }.map(\.1)
+    }
+
+    /// 특정 날짜의 책별 독서 요약 (표지 카드용)
+    func bookSummaries(for date: Date) -> [DayBookSummary] {
+        let daySessions = sessions(for: date)
+        // libraryBookId 기준으로 그룹핑
+        var grouped: [UUID: (book: LibraryBook, duration: TimeInterval)] = [:]
+        for session in daySessions {
+            guard let book = session.libraryBook else { continue }
+            if var entry = grouped[book.id] {
+                entry.duration += session.duration
+                grouped[book.id] = entry
+            } else {
+                grouped[book.id] = (book: book, duration: session.duration)
+            }
+        }
+        return grouped.values
+            .map { entry in
+                DayBookSummary(
+                    id: entry.book.id,
+                    title: entry.book.title,
+                    coverURL: entry.book.coverURL,
+                    bookColor: entry.book.bookColor,
+                    totalDuration: entry.duration
+                )
+            }
+            .sorted { $0.bookColor.rawValue < $1.bookColor.rawValue }
+    }
+
     // MARK: - Private
 
     private func computeStats() {
@@ -150,4 +193,14 @@ final class RecordTabViewModel: ObservableObject {
             .filter { $0.startTime >= weekInterval.start && $0.startTime < weekInterval.end }
             .reduce(0.0) { $0 + $1.duration }
     }
+}
+
+// MARK: - 책별 독서 요약
+
+struct DayBookSummary: Identifiable, Sendable {
+    let id: UUID              // libraryBookId
+    let title: String
+    let coverURL: String
+    let bookColor: BookColor
+    let totalDuration: TimeInterval
 }

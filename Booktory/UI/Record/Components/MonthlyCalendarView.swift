@@ -38,7 +38,8 @@ struct MonthlyCalendarView: View {
                             depth: viewModel.readingDepth(for: date),
                             isSelected: calendar.isDate(date, inSameDayAs: viewModel.selectedDate),
                             isToday: calendar.isDateInToday(date),
-                            compact: true
+                            compact: true,
+                            dots: viewModel.bookColors(for: date)
                         )
                         .onTapGesture {
                             viewModel.selectedDate = date

@@ -53,10 +53,10 @@ private struct RecordTabContentView: View {
                         MonthlyCalendarView(viewModel: viewModel)
                     }
 
-                    // 선택 날짜 세션 목록
-                    DaySessionList(
+                    // 선택 날짜 책 표지 카드 목록
+                    DayBookList(
                         date: viewModel.selectedDate,
-                        sessions: viewModel.sessions(for: viewModel.selectedDate)
+                        summaries: viewModel.bookSummaries(for: viewModel.selectedDate)
                     )
                 }
                 .padding(.vertical)
