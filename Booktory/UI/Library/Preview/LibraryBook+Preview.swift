@@ -82,6 +82,50 @@ extension PreviewLibraryRepository {
         return repo
     }
 
+    /// 독서 세션이 포함된 Repository (기록 탭 Preview용)
+    static func populatedWithSessions() -> PreviewLibraryRepository {
+        let repo = PreviewLibraryRepository()
+        let books = LibraryBook.previewItems
+        for book in books {
+            try? repo.add(book)
+        }
+
+        let calendar = Calendar.current
+        let now = Date()
+
+        // 읽고 있는 책(클린 코드)에 이번 주 세션 추가
+        if let readingBook = books.first(where: { $0.status == .reading }) {
+            for dayOffset in [0, -1, -2, -4] {
+                guard let date = calendar.date(byAdding: .day, value: dayOffset, to: now) else { continue }
+                let durations: [TimeInterval] = [1800, 3600, 5400, 2700]
+                let duration = durations[abs(dayOffset) % durations.count]
+                let session = ReadingSession(
+                    libraryBookId: readingBook.id,
+                    startTime: calendar.date(bySettingHour: 21, minute: 0, second: 0, of: date) ?? date,
+                    endTime: calendar.date(bySettingHour: 21, minute: Int(duration / 60), second: 0, of: date) ?? date,
+                    duration: duration
+                )
+                try? repo.addSession(session, to: readingBook.id)
+            }
+        }
+
+        // 읽고 있는 책(함께 자라기)에 지난 주 세션 추가
+        if let secondBook = books.first(where: { $0.title == "함께 자라기" }) {
+            for dayOffset in [-7, -9, -14, -20] {
+                guard let date = calendar.date(byAdding: .day, value: dayOffset, to: now) else { continue }
+                let session = ReadingSession(
+                    libraryBookId: secondBook.id,
+                    startTime: calendar.date(bySettingHour: 20, minute: 30, second: 0, of: date) ?? date,
+                    endTime: calendar.date(bySettingHour: 21, minute: 15, second: 0, of: date) ?? date,
+                    duration: 2700
+                )
+                try? repo.addSession(session, to: secondBook.id)
+            }
+        }
+
+        return repo
+    }
+
     /// Empty State 확인용 빈 Repository
     static func empty() -> PreviewLibraryRepository {
         PreviewLibraryRepository()
