@@ -11,6 +11,7 @@ import Foundation
 extension LibraryBook {
 
     /// Preview용 더미 LibraryBook 배열 (다양한 상태 포함)
+    /// colorIndex는 repo.add() 호출 시 자동 순환 배정된다.
     static var previewItems: [LibraryBook] {
         [
             LibraryBook(
@@ -109,9 +110,9 @@ extension PreviewLibraryRepository {
             }
         }
 
-        // 읽고 있는 책(함께 자라기)에 지난 주 세션 추가
+        // 읽고 있는 책(함께 자라기)에 이번 주 + 지난 주 세션 추가 (도트 확인용)
         if let secondBook = books.first(where: { $0.title == "함께 자라기" }) {
-            for dayOffset in [-7, -9, -14, -20] {
+            for dayOffset in [-1, -2, -7, -9, -14, -20] {
                 guard let date = calendar.date(byAdding: .day, value: dayOffset, to: now) else { continue }
                 let session = ReadingSession(
                     libraryBookId: secondBook.id,

@@ -32,7 +32,8 @@ struct WeeklyCalendarView: View {
                         date: date,
                         depth: viewModel.readingDepth(for: date),
                         isSelected: calendar.isDate(date, inSameDayAs: viewModel.selectedDate),
-                        isToday: calendar.isDateInToday(date)
+                        isToday: calendar.isDateInToday(date),
+                        dots: viewModel.bookColors(for: date)
                     )
                     .onTapGesture {
                         viewModel.selectedDate = date

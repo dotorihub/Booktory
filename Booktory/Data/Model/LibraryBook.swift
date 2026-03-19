@@ -19,6 +19,8 @@ final class LibraryBook {
     var addedAt: Date
     var startedAt: Date?
     var completedAt: Date?
+    /// 책 고유 컬러 인덱스 (BookColor.allCases.count 순환 배정)
+    var colorIndex: Int = 0
 
     @Relationship(deleteRule: .cascade)
     var sessions: [ReadingSession] = []
@@ -32,7 +34,8 @@ final class LibraryBook {
         bookDescription: String,
         status: ReadingStatus,
         startedAt: Date? = nil,
-        completedAt: Date? = nil
+        completedAt: Date? = nil,
+        colorIndex: Int = 0
     ) {
         self.id = UUID()
         self.isbn = isbn
@@ -45,5 +48,15 @@ final class LibraryBook {
         self.addedAt = Date()
         self.startedAt = startedAt ?? (status == .reading ? Date() : nil)
         self.completedAt = completedAt ?? nil
+        self.colorIndex = colorIndex
+    }
+}
+
+// MARK: - Computed (extension으로 분리하여 @Model 매크로 간섭 방지)
+
+extension LibraryBook {
+    /// 할당된 BookColor
+    var bookColor: BookColor {
+        BookColor.from(index: colorIndex)
     }
 }
