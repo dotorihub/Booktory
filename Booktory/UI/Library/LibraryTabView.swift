@@ -109,7 +109,7 @@ private struct LibraryTabContentView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             NavigationLink {
-                SettingsPlaceholderView()
+                SettingsView()
             } label: {
                 Image(systemName: "gearshape")
                     .accessibilityLabel("설정")
