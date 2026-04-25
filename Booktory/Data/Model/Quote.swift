@@ -17,6 +17,8 @@ final class Quote {
     /// 텍스트 기록 내용 (contentType == .text일 때 사용)
     var textContent: String?
     /// 이미지 JPEG 데이터 (contentType == .image일 때 사용)
+    /// `.externalStorage`로 SwiftData 본 DB에는 참조만 두고 실제 바이트는 외부 파일로 저장 — 사진 누적 시 DB 비대화 방지.
+    @Attribute(.externalStorage)
     var imageData: Data?
     var createdAt: Date
 

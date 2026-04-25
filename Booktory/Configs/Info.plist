@@ -8,5 +8,9 @@
 	<string>${API_CLIENT_ID}</string>
 	<key>API_CLIENT_SECRET</key>
 	<string>${API_CLIENT_SECRET}</string>
+	<key>NSCameraUsageDescription</key>
+	<string>독서 중 책 페이지를 촬영해 기록하기 위해 카메라를 사용합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>기록한 사진을 사진 앨범에도 저장하기 위해 권한이 필요합니다.</string>
 </dict>
 </plist>
