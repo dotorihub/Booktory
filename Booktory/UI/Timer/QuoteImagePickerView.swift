@@ -32,6 +32,9 @@ struct QuoteImagePickerView: View {
     @State private var saveErrorMessage: String = ""
 
     private let jpegCompression: CGFloat = 0.8
+    /// 앱 DB에 저장할 이미지의 최대 변 길이 (px). 원본은 앨범에 그대로 저장되므로,
+    /// 앱은 썸네일/상세 표시에 충분한 해상도만 보관해 누적 용량과 디코딩 비용을 절감한다.
+    private let appStorageMaxLongEdge: CGFloat = 2048
 
     var body: some View {
         Group {
@@ -109,10 +112,11 @@ struct QuoteImagePickerView: View {
     // MARK: - 저장
 
     /// 편집기에서 [저장] 누른 시점.
+    /// 앨범에는 풀해상도 원본을, 앱 DB에는 다운샘플(2048px)된 JPEG을 저장한다 — 원본은 앨범에 항상 남으므로 앱은 가벼운 사본만 보관.
     /// 1) 앱 DB 저장 (onSave 콜백) — 항상 수행
     /// 2) 앨범 저장 — 권한 상태에 따라 분기 (거부 알럿 시에는 1)도 미루고 사용자 선택 대기)
     private func handleSave(_ finalImage: UIImage) {
-        guard let data = finalImage.jpegData(compressionQuality: jpegCompression) else {
+        guard let data = downsampledJPEG(from: finalImage, maxLongEdge: appStorageMaxLongEdge) else {
             saveErrorMessage = "이미지 변환에 실패했어요."
             showSaveErrorAlert = true
             return
@@ -146,6 +150,28 @@ struct QuoteImagePickerView: View {
             onSave(data)
             dismiss()
         }
+    }
+
+    /// 긴 변이 `maxLongEdge`를 초과하면 비율 유지하며 축소 후 JPEG로 인코딩.
+    /// 이미 작은 이미지는 추가 리렌더 없이 그대로 인코딩.
+    private func downsampledJPEG(from image: UIImage, maxLongEdge: CGFloat) -> Data? {
+        let longEdge = max(image.size.width, image.size.height)
+        guard longEdge > maxLongEdge else {
+            return image.jpegData(compressionQuality: jpegCompression)
+        }
+        let scaleFactor = maxLongEdge / longEdge
+        let targetSize = CGSize(
+            width: image.size.width * scaleFactor,
+            height: image.size.height * scaleFactor
+        )
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.opaque = true
+        let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
+        let resized = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+        return resized.jpegData(compressionQuality: jpegCompression)
     }
 
     /// 권한 알럿에서 [앱에만 저장] 선택한 경우.
