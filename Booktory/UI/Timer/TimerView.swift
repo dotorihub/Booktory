@@ -56,7 +56,7 @@ struct TimerView: View {
                 viewModel.saveQuote(contentType: .text, text: text)
             }
         }
-        .sheet(isPresented: $showImagePicker) {
+        .fullScreenCover(isPresented: $showImagePicker) {
             QuoteImagePickerView { imageData in
                 viewModel.saveQuote(contentType: .image, imageData: imageData)
             }
