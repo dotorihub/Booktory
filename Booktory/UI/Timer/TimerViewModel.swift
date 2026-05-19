@@ -126,19 +126,19 @@ final class TimerViewModel: ObservableObject {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 
-    // MARK: - 문장/이미지 기록
+    // MARK: - 문장 기록
 
-    /// 텍스트 또는 이미지 Quote 저장
-    func saveQuote(contentType: QuoteContentType, text: String? = nil, imageData: Data? = nil) {
-        let quote = Quote(
-            libraryBookId: book.id,
-            contentType: contentType,
-            textContent: text,
-            imageData: imageData
-        )
+    /// 텍스트 Quote 저장. (사진 OCR 결과도 최종적으로는 텍스트로 저장됨)
+    func saveQuote(text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            logger.info("빈 텍스트 — 저장 생략")
+            return
+        }
+        let quote = Quote(libraryBookId: book.id, textContent: trimmed)
         do {
             try repository.addQuote(quote, to: book.id)
-            logger.info("Quote 저장 완료: \(contentType.rawValue)")
+            logger.info("Quote 저장 완료")
         } catch {
             logger.error("Quote 저장 실패: \(error.localizedDescription)")
         }
