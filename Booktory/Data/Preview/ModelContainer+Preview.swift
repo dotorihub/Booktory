@@ -80,7 +80,6 @@ extension ModelContainer {
         // 샘플 Quote
         let quote1 = Quote(
             libraryBookId: book1.id,
-            contentType: .text,
             textContent: "아무도 먹지 않는 밥상 위에 시든 미나리가 놓여 있었다."
         )
         quote1.libraryBook = book1

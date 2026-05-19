@@ -114,12 +114,10 @@ extension PreviewLibraryRepository {
         if let readingBook = books.first(where: { $0.status == .reading }) {
             let textQuote = Quote(
                 libraryBookId: readingBook.id,
-                contentType: .text,
                 textContent: "깨끗한 코드는 잘 쓴 문장처럼 읽혀야 한다."
             )
             let textQuote2 = Quote(
                 libraryBookId: readingBook.id,
-                contentType: .text,
                 textContent: "나쁜 코드는 나쁜 코드를 유혹한다. 깨진 창문 이론과 같다."
             )
             try? repo.addQuote(textQuote, to: readingBook.id)

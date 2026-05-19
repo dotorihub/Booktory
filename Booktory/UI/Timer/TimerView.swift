@@ -53,12 +53,12 @@ struct TimerView: View {
         }
         .sheet(isPresented: $showTextInput) {
             QuoteTextInputView { text in
-                viewModel.saveQuote(contentType: .text, text: text)
+                viewModel.saveQuote(text: text)
             }
         }
         .fullScreenCover(isPresented: $showImagePicker) {
-            QuoteImagePickerView { imageData in
-                viewModel.saveQuote(contentType: .image, imageData: imageData)
+            QuoteImagePickerView { extractedText in
+                viewModel.saveQuote(text: extractedText)
             }
         }
         .alert("독서를 종료할까요?", isPresented: $viewModel.showExitConfirm) {
