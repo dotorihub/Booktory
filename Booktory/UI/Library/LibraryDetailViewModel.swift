@@ -79,6 +79,16 @@ final class LibraryDetailViewModel: ObservableObject {
         }
     }
 
+    func deleteQuote(_ quote: Quote) async {
+        do {
+            try repository.deleteQuote(id: quote.id)
+            quotes.removeAll { $0.id == quote.id }
+        } catch {
+            logger.error("문장 삭제 실패: \(error.localizedDescription)")
+            errorMessage = "문장을 삭제하지 못했습니다."
+        }
+    }
+
     /// 서재에서 삭제
     func deleteBook() async {
         do {

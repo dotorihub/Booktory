@@ -21,14 +21,6 @@ struct MainView: View {
                 .tag(AppCoordinator.Tab.reading)
                 .accessibilityLabel(AppCoordinator.Tab.reading.title)
 
-            SearchView()
-                .tabItem {
-                    Label(AppCoordinator.Tab.search.title,
-                          systemImage: AppCoordinator.Tab.search.icon)
-                }
-                .tag(AppCoordinator.Tab.search)
-                .accessibilityLabel(AppCoordinator.Tab.search.title)
-
             RecordTabView()
                 .tabItem {
                     Label(AppCoordinator.Tab.record.title,

@@ -12,23 +12,24 @@ struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                searchBar
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
-                    .padding(.bottom, 12)
+        VStack(spacing: 0) {
+            searchBar
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
+                .padding(.bottom, 12)
 
-                content
-                    .frame(maxWidth: .infinity)
+            content
+                .frame(maxWidth: .infinity)
 
-                Spacer()
-            }
-            .navigationTitle("검색")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(for: Book.self) { book in
-                BookDetailView(book: book)
-            }
+            Spacer()
+        }
+        .navigationTitle("검색")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: Book.self) { book in
+            BookDetailView(book: book)
+        }
+        .onAppear {
+            isSearchFocused = true
         }
     }
 

@@ -201,7 +201,11 @@ private struct LibraryDetailContentView: View {
                     .padding(.vertical, 24)
             } else {
                 ForEach(viewModel.quotes, id: \.id) { quote in
-                    QuoteRowView(quote: quote)
+                    SwipeToDeleteRow(onDelete: {
+                        Task { await viewModel.deleteQuote(quote) }
+                    }) {
+                        QuoteRowView(quote: quote)
+                    }
                 }
             }
         }

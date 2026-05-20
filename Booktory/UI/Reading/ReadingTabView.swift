@@ -34,6 +34,7 @@ private struct ReadingTabContentView: View {
     @StateObject var viewModel: ReadingTabViewModel
     @EnvironmentObject private var coordinator: AppCoordinator
     @Environment(\.libraryRepository) private var repository
+    @State private var isSearchPresented = false
 
     var body: some View {
         NavigationStack {
@@ -43,7 +44,7 @@ private struct ReadingTabContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if viewModel.books.isEmpty {
                     ReadingEmptyView {
-                        coordinator.switchTab(to: .search)
+                        isSearchPresented = true
                     }
                 } else {
                     ScrollView {
@@ -63,8 +64,23 @@ private struct ReadingTabContentView: View {
                     }
                 }
             }
-            .navigationTitle("독서")
-            .navigationBarTitleDisplayMode(.large)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("독서")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 8)
+                        .padding(.bottom, 4)
+                    fakeSearchBar
+                }
+                .background(Color(.systemBackground))
+            }
+            .navigationTitle("")
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(isPresented: $isSearchPresented) {
+                SearchView()
+            }
             .task {
                 viewModel.pendingAutoOpenId = coordinator.pendingAutoOpenBookId
                 await viewModel.loadBooks()
@@ -93,6 +109,33 @@ private struct ReadingTabContentView: View {
                 Text(viewModel.errorMessage ?? "")
             }
         }
+    }
+}
+
+// MARK: - Subviews
+
+extension ReadingTabContentView {
+    private var fakeSearchBar: some View {
+        Button {
+            isSearchPresented = true
+        } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                Text("읽고 싶은 책을 검색해 보세요")
+                    .foregroundStyle(.tertiary)
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(.systemGray6))
+            )
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
     }
 }
 

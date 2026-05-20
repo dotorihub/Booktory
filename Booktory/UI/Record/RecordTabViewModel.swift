@@ -45,6 +45,15 @@ final class RecordTabViewModel: ObservableObject {
 
     // MARK: - 공개 인터페이스
 
+    func deleteQuote(_ quote: Quote) async {
+        do {
+            try repository.deleteQuote(id: quote.id)
+            recentQuotes.removeAll { $0.id == quote.id }
+        } catch {
+            logger.error("문장 삭제 실패: \(error.localizedDescription)")
+        }
+    }
+
     /// 화면 진입 시 전체 데이터 로드
     func loadData() async {
         do {

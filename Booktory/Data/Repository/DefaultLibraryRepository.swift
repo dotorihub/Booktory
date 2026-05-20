@@ -126,6 +126,13 @@ final class DefaultLibraryRepository: LibraryRepositoryProtocol {
         return try context.fetch(descriptor)
     }
 
+    func deleteQuote(id: UUID) throws {
+        let descriptor = FetchDescriptor<Quote>(predicate: #Predicate { $0.id == id })
+        guard let quote = try context.fetch(descriptor).first else { return }
+        context.delete(quote)
+        try context.save()
+    }
+
     // MARK: - Private
 
     private func fetchBookBy(id: UUID) throws -> LibraryBook? {

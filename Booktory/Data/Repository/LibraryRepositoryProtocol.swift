@@ -31,4 +31,5 @@ protocol LibraryRepositoryProtocol {
     func addQuote(_ quote: Quote, to bookId: UUID) throws
     func fetchQuotes(for bookId: UUID) throws -> [Quote]
     func fetchAllQuotes() throws -> [Quote]
+    func deleteQuote(id: UUID) throws
 }

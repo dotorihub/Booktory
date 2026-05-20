@@ -60,7 +60,9 @@ private struct RecordTabContentView: View {
                     )
 
                     // 최근 문장 기록
-                    QuoteListSection(quotes: viewModel.recentQuotes)
+                    QuoteListSection(quotes: viewModel.recentQuotes) { quote in
+                        Task { await viewModel.deleteQuote(quote) }
+                    }
                 }
                 .padding(.vertical)
             }

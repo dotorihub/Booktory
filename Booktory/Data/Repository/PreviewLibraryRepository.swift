@@ -89,4 +89,8 @@ final class PreviewLibraryRepository: LibraryRepositoryProtocol {
     func fetchAllQuotes() throws -> [Quote] {
         quotes.sorted { $0.createdAt > $1.createdAt }
     }
+
+    func deleteQuote(id: UUID) throws {
+        quotes.removeAll { $0.id == id }
+    }
 }

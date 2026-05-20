@@ -9,6 +9,7 @@ import SwiftUI
 
 struct QuoteListSection: View {
     let quotes: [Quote]
+    var onDelete: ((Quote) -> Void)? = nil
 
     /// 기록 탭에서 표시할 최대 개수
     private let displayLimit = 10
@@ -27,15 +28,16 @@ struct QuoteListSection: View {
                     .padding(.vertical, 24)
             } else {
                 ForEach(quotes.prefix(displayLimit), id: \.id) { quote in
-                    VStack(alignment: .leading, spacing: 2) {
-                        // 책 제목 표시
-                        if let bookTitle = quote.libraryBook?.title {
-                            Text(bookTitle)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal)
+                    SwipeToDeleteRow(onDelete: { onDelete?(quote) }) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            if let bookTitle = quote.libraryBook?.title {
+                                Text(bookTitle)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal)
+                            }
+                            QuoteRowView(quote: quote)
                         }
-                        QuoteRowView(quote: quote)
                     }
                 }
             }
