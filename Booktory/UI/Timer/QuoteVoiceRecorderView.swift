@@ -79,26 +79,16 @@ struct QuoteVoiceRecorderView: View {
 
         switch (status.speech, status.mic) {
         case (.authorized, .granted):
-            startRecording()
+            stage = .recording
         case (.denied, _), (.restricted, _), (_, .denied):
             showPermissionAlert = true
         default:
             let granted = await SpeechRecognitionService.requestPermissions()
             if granted {
-                startRecording()
+                stage = .recording
             } else {
                 showPermissionAlert = true
             }
-        }
-    }
-
-    private func startRecording() {
-        do {
-            try speechService.startRecording()
-            stage = .recording
-        } catch {
-            errorMessage = error.localizedDescription
-            showErrorAlert = true
         }
     }
 
