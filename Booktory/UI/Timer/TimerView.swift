@@ -20,6 +20,8 @@ struct TimerView: View {
     @State private var showTextInput: Bool = false
     /// 이미지 기록 시트 표시
     @State private var showImagePicker: Bool = false
+    /// 음성 기록 시트 표시
+    @State private var showVoiceRecorder: Bool = false
 
     // 매초마다 UI 업데이트용 Timer
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -59,6 +61,11 @@ struct TimerView: View {
         .fullScreenCover(isPresented: $showImagePicker) {
             QuoteImagePickerView { extractedText in
                 viewModel.saveQuote(text: extractedText)
+            }
+        }
+        .fullScreenCover(isPresented: $showVoiceRecorder) {
+            QuoteVoiceRecorderView { text in
+                viewModel.saveQuote(text: text)
             }
         }
         .alert("독서를 종료할까요?", isPresented: $viewModel.showExitConfirm) {
@@ -178,6 +185,20 @@ struct TimerView: View {
                 .frame(width: 60, height: 52)
             }
             .accessibilityLabel("사진 기록")
+
+            Button {
+                showVoiceRecorder = true
+            } label: {
+                VStack(spacing: 4) {
+                    Image(systemName: "mic")
+                        .font(.system(size: 20))
+                    Text("음성 기록")
+                        .font(.caption2)
+                }
+                .foregroundStyle(.primary)
+                .frame(width: 60, height: 52)
+            }
+            .accessibilityLabel("음성 기록")
         }
         .padding(.bottom, 8)
     }
