@@ -12,12 +12,12 @@ struct RecordQuoteCard: View {
 
     // 미색 계열 파스텔. id 해시로 카드마다 고정 색상 부여
     private static let pastelColors: [Color] = [
-        Color(red: 0.99, green: 0.97, blue: 0.88), // 크림
-        Color(red: 0.98, green: 0.93, blue: 0.89), // 피치
-        Color(red: 0.90, green: 0.95, blue: 0.91), // 민트
-        Color(red: 0.93, green: 0.91, blue: 0.97), // 라벤더
-        Color(red: 0.89, green: 0.94, blue: 0.99), // 스카이
-        Color(red: 0.99, green: 0.92, blue: 0.94), // 로즈
+        Color(red: 0.99, green: 0.98, blue: 0.94), // 크림
+        Color(red: 0.99, green: 0.96, blue: 0.94), // 피치
+        Color(red: 0.94, green: 0.98, blue: 0.95), // 민트
+        Color(red: 0.96, green: 0.95, blue: 0.99), // 라벤더
+        Color(red: 0.94, green: 0.97, blue: 0.99), // 스카이
+        Color(red: 0.99, green: 0.95, blue: 0.96), // 로즈
     ]
 
     private var backgroundColor: Color {
@@ -26,11 +26,13 @@ struct RecordQuoteCard: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 0) {
             Text(quote.textContent ?? "")
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .center)
+
+            Spacer(minLength: 52)
 
             if let title = quote.libraryBook?.title {
                 Text(title)
@@ -39,27 +41,11 @@ struct RecordQuoteCard: View {
             }
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 28)
+        .padding(.top, 40)
+        .padding(.bottom, 20)
         .background(backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.04), radius: 1, x: -1, y: -1)
         .shadow(color: .black.opacity(0.06), radius: 4, x: 2, y: 4)
     }
-}
-
-#Preview {
-    let book = LibraryBook(
-        isbn: "9791162540145",
-        title: "클린 코드",
-        author: "로버트 C. 마틴",
-        publisher: "인사이트",
-        coverURL: "",
-        bookDescription: "",
-        status: .reading
-    )
-    let quote = Quote(libraryBookId: book.id, textContent: "깨끗한 코드는 잘 쓴 문장처럼 읽혀야 한다.")
-    quote.libraryBook = book
-
-    RecordQuoteCard(quote: quote)
-        .padding()
 }

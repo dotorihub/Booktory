@@ -40,7 +40,7 @@ private struct RecordTabContentView: View {
                     )
                 } else {
                     ScrollView {
-                        LazyVStack(spacing: 12) {
+                        LazyVStack(spacing: 24) {
                             ForEach(viewModel.quotes) { quote in
                                 RecordQuoteCard(quote: quote)
                                     .padding(.horizontal)
