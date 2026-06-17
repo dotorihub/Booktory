@@ -50,7 +50,7 @@ private struct LibraryTabContentView: View {
 
                 if viewModel.books.isEmpty && !viewModel.isLoading {
                     LibraryEmptyView(filter: viewModel.selectedFilter) {
-                        coordinator.switchTab(to: .search)
+                        coordinator.switchTab(to: .reading)
                     }
                 } else {
                     bookContent

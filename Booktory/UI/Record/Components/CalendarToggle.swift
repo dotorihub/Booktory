@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CalendarToggle: View {
-    @Binding var mode: RecordTabViewModel.CalendarMode
+    @Binding var mode: StatisticsTabViewModel.CalendarMode
 
     var body: some View {
         Picker("달력 모드", selection: $mode) {
-            Text("위클리").tag(RecordTabViewModel.CalendarMode.weekly)
-            Text("먼슬리").tag(RecordTabViewModel.CalendarMode.monthly)
+            Text("위클리").tag(StatisticsTabViewModel.CalendarMode.weekly)
+            Text("먼슬리").tag(StatisticsTabViewModel.CalendarMode.monthly)
         }
         .pickerStyle(.segmented)
         .padding(.horizontal)

@@ -13,26 +13,26 @@ import Combine
 final class AppCoordinator: ObservableObject {
 
     enum Tab: Int, CaseIterable {
-        case reading = 0
-        case search  = 1
-        case record  = 2
-        case library = 3
+        case reading    = 0
+        case record     = 1
+        case statistics = 2
+        case library    = 3
 
         var title: String {
             switch self {
-            case .reading: return "독서"
-            case .search:  return "검색"
-            case .record:  return "기록"
-            case .library: return "서재"
+            case .reading:    return "독서"
+            case .record:     return "기록"
+            case .statistics: return "통계"
+            case .library:    return "서재"
             }
         }
 
         var icon: String {
             switch self {
-            case .reading: return "book.fill"
-            case .search:  return "magnifyingglass"
-            case .record:  return "chart.bar.fill"
-            case .library: return "books.vertical.fill"
+            case .reading:    return "book.fill"
+            case .record:     return "note.text"
+            case .statistics: return "chart.bar.fill"
+            case .library:    return "books.vertical.fill"
             }
         }
     }

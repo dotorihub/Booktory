@@ -29,6 +29,14 @@ struct MainView: View {
                 .tag(AppCoordinator.Tab.record)
                 .accessibilityLabel(AppCoordinator.Tab.record.title)
 
+            StatisticsTabView()
+                .tabItem {
+                    Label(AppCoordinator.Tab.statistics.title,
+                          systemImage: AppCoordinator.Tab.statistics.icon)
+                }
+                .tag(AppCoordinator.Tab.statistics)
+                .accessibilityLabel(AppCoordinator.Tab.statistics.title)
+
             LibraryTabView()
                 .tabItem {
                     Label(AppCoordinator.Tab.library.title,

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeeklyCalendarView: View {
-    @ObservedObject var viewModel: RecordTabViewModel
+    @ObservedObject var viewModel: StatisticsTabViewModel
 
     private let weekdayLabels = ["월", "화", "수", "목", "금", "토", "일"]
     private let calendar = Calendar.current
@@ -47,6 +47,6 @@ struct WeeklyCalendarView: View {
 
 #Preview {
     WeeklyCalendarView(
-        viewModel: RecordTabViewModel(repository: PreviewLibraryRepository.populatedWithSessions())
+        viewModel: StatisticsTabViewModel(repository: PreviewLibraryRepository.populatedWithSessions())
     )
 }

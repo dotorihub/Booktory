@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonthlyCalendarView: View {
-    @ObservedObject var viewModel: RecordTabViewModel
+    @ObservedObject var viewModel: StatisticsTabViewModel
 
     private let weekdayLabels = ["월", "화", "수", "목", "금", "토", "일"]
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
@@ -88,6 +88,6 @@ struct MonthlyCalendarView: View {
 
 #Preview {
     MonthlyCalendarView(
-        viewModel: RecordTabViewModel(repository: PreviewLibraryRepository.populatedWithSessions())
+        viewModel: StatisticsTabViewModel(repository: PreviewLibraryRepository.populatedWithSessions())
     )
 }

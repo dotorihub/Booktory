@@ -1,5 +1,5 @@
 //
-//  RecordTabViewModel.swift
+//  StatisticsTabViewModel.swift
 //  Booktory
 //
 //  기록 탭의 상태 관리 및 비즈니스 로직.
@@ -11,7 +11,7 @@ import Combine
 import os
 
 @MainActor
-final class RecordTabViewModel: ObservableObject {
+final class StatisticsTabViewModel: ObservableObject {
 
     // MARK: - 통계
 

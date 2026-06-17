@@ -1,5 +1,5 @@
 //
-//  RecordTabView.swift
+//  StatisticsTabView.swift
 //  Booktory
 //
 //  기록 탭 — 독서 통계 + 위클리/먼슬리 달력 히트맵.
@@ -11,17 +11,17 @@ import SwiftUI
 
 /// 환경에서 repository를 읽어 ViewModel을 생성하는 진입 뷰.
 /// Preview에서는 viewModel을 직접 주입해 실제 DB 없이 동작한다.
-struct RecordTabView: View {
+struct StatisticsTabView: View {
     @Environment(\.libraryRepository) private var repository
-    private let previewViewModel: RecordTabViewModel?
+    private let previewViewModel: StatisticsTabViewModel?
 
-    init(viewModel: RecordTabViewModel? = nil) {
+    init(viewModel: StatisticsTabViewModel? = nil) {
         self.previewViewModel = viewModel
     }
 
     var body: some View {
         RecordTabContentView(
-            viewModel: previewViewModel ?? RecordTabViewModel(repository: repository)
+            viewModel: previewViewModel ?? StatisticsTabViewModel(repository: repository)
         )
     }
 }
@@ -29,7 +29,7 @@ struct RecordTabView: View {
 // MARK: - Content View
 
 private struct RecordTabContentView: View {
-    @StateObject var viewModel: RecordTabViewModel
+    @StateObject var viewModel: StatisticsTabViewModel
 
     var body: some View {
         NavigationStack {
@@ -66,7 +66,7 @@ private struct RecordTabContentView: View {
                 }
                 .padding(.vertical)
             }
-            .navigationTitle("기록")
+            .navigationTitle("통계")
             .navigationBarTitleDisplayMode(.inline)
         }
         .task {
@@ -78,8 +78,8 @@ private struct RecordTabContentView: View {
 // MARK: - Previews
 
 #Preview("세션 있음") {
-    RecordTabView(
-        viewModel: RecordTabViewModel(
+    StatisticsTabView(
+        viewModel: StatisticsTabViewModel(
             repository: PreviewLibraryRepository.populatedWithSessions()
         )
     )
@@ -87,8 +87,8 @@ private struct RecordTabContentView: View {
 }
 
 #Preview("빈 상태") {
-    RecordTabView(
-        viewModel: RecordTabViewModel(
+    StatisticsTabView(
+        viewModel: StatisticsTabViewModel(
             repository: PreviewLibraryRepository.empty()
         )
     )
